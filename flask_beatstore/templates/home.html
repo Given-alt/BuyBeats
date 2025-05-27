@@ -6,10 +6,24 @@
 </head>
 <body>
     <h1>Welcome to the Beat Store</h1>
+    
     {% if current_user.is_authenticated %}
         <p>Hello, {{ current_user.username }}! <a href="{{ url_for('logout') }}">Logout</a></p>
+        <a href="{{ url_for('upload') }}">Upload a Beat</a>
     {% else %}
         <a href="{{ url_for('login') }}">Login</a> | <a href="{{ url_for('register') }}">Register</a>
     {% endif %}
+    
+    <h2>Available Beats</h2>
+    {% for beat in beats %}
+        <div>
+            <h3>{{ beat.title }}</h3>
+            <p>Price: ${{ beat.price }}</p>
+            <audio controls>
+                <source src="{{ beat.file_url }}" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+        </div>
+    {% endfor %}
 </body>
 </html>
